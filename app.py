@@ -3,11 +3,12 @@ import streamlit as st
 import pandas as pd
 
 try:
-    from graphviz import Source
+    dot = tree_to_dot(root)   # genera string DOT
+    st.graphviz_chart(dot)    # Streamlit lo renderiza sin importar graphviz local
+except Exception as e:
+    st.warning(f"No se pudo renderizar el árbol como gráfico: {e}")
+    st.code(tree_to_pretty_text(root))
 
-    HAS_GRAPHVIZ = True
-except ImportError:
-    HAS_GRAPHVIZ = False
 
 from parser_lr1 import (
     parse_grammar_text,
